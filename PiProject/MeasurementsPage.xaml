@@ -1,0 +1,50 @@
+﻿<Page
+    x:Class="PiProject.MeasurementsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PiProject"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    >
+
+    <Page.BottomAppBar>
+        <CommandBar x:Name="commandBar" IsOpen="False" ClosedDisplayMode="Compact" DefaultLabelPosition="Right">
+            <AppBarButton x:Name="newMeasurementButton" Label="Measure" Icon="Add" Click="NewMeasurementButton_Click"/>
+            <AppBarButton x:Name="newDatasetButton" Label="Dataset" Icon="Add" AllowFocusOnInteraction="True">
+                <AppBarButton.Flyout>
+                    <Flyout x:Name="newDatasetFlyout">
+                        <StackPanel>
+                            <TextBlock Margin="5" HorizontalAlignment="Center" Text="New dataset" FontWeight="Bold"/>
+                            <TextBox Margin="5" x:Name="newDatasetNameTextBox" PlaceholderText="Name" TextChanged="NewDatasetNameTextBox_TextChanged"/>
+                            <Button Margin="5" HorizontalAlignment="Center" x:Name="newDatasetCreateButton" Content="Create" 
+                                IsEnabled="False" Click="NewDatasetCreateButton_Click"/>
+                        </StackPanel>
+                    </Flyout>
+                </AppBarButton.Flyout>
+            </AppBarButton>
+            <AppBarSeparator />
+
+            <AppBarButton x:Name="deleteMeasurementButton" IsEnabled="False" Icon="Delete" Label="Delete" Click="DeleteMeasurementButton_Click"/>
+            <AppBarButton x:Name="selectAllButton" Icon="SelectAll" Label="All" Click="SelectAllButton_Click" />
+            <AppBarSeparator />
+
+            <AppBarButton x:Name="refreshMeasurementListButton" Label="Refresh" Icon="Refresh" Click="RefreshMeasurementListButton_Click"/>
+
+        </CommandBar>
+    </Page.BottomAppBar>
+
+    <Grid>
+        <!--<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="48" Text="Work in progress"/>-->
+        <GridView x:Name="measGrid" SelectionMode="Multiple" ItemsSource="{x:Bind MeasurementList}"
+            IsMultiSelectCheckBoxEnabled="False" SelectionChanged="MeasGrid_SelectionChanged"
+            IsDoubleTapEnabled="True" RightTapped="MeasGrid_RightTapped">
+            <GridView.ItemTemplate>
+                <DataTemplate x:DataType="local:Measurement">
+                    <local:MeasurementDataTemplate />
+                </DataTemplate>
+            </GridView.ItemTemplate>
+        </GridView>
+    </Grid>
+</Page>
